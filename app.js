@@ -1,21 +1,22 @@
 import { masperoStations } from "./maspero.js";
+import { masperoDailymotion, dailymotionEmbedURL, dailymotionVideoURL } from "./dailymotion.js";
 const $=id=>document.getElementById(id);
 const stations=[
 {id:"eg:9090",name:"Radio 9090",ar:"راديو 9090",alias:"9090 90 90 ٩٠٩٠",band:"FM",freq:909,genre:"Talk · Music",urls:["https://9090streaming.mobtada.com/9090FMEGYPT"]},
 {id:"eg:nogoum",name:"Nogoum FM",ar:"نجوم إف إم",alias:"nogoom 100.6 نجوم",band:"FM",freq:1006,genre:"Music · Entertainment",urls:["https://audio.nrpstream.com/listen/nogoumfm/radio.mp3"]},
 {id:"eg:nile",name:"Nile FM",ar:"نايل إف إم",alias:"nile 104.2 نايل",band:"FM",freq:1042,genre:"English · Music",urls:["https://audio.nrpstream.com/listen/nile_fm/radio.mp3"]}
-,...masperoStations
+,...masperoStations.map(st=>({...st,dailymotion:masperoDailymotion[st.id]||null}))
 ];const bands={FM:{min:875,max:1080,step:1,unit:"MHz"},AM:{min:531,max:1602,step:9,unit:"kHz"}};
 const lang={
-en:{live:"◈ LIVE RADIO ◈",tuner:"FREQUENCY TUNER",radio:"Radio",search:"Search",favorites:"Favorites",settings:"Settings",language:"Language",appearance:"Appearance",tuned:"TUNED STATION",none:"No station at this frequency",am:"No verified AM streams yet",hint:"Drag to tune · use arrows to scan",candidate:"Candidate stream · iPhone audio test required",ready:"Ready · press Play",connecting:"Connecting",playing:"Playing",paused:"Paused",buffering:"Buffering",reconnecting:"Reconnecting",unavailable:"Unavailable · try another station",empty:"No stations found",noFavorites:"No favorites yet. Tap ☆ on a station.",noAudio:"No verified in-app audio stream · use the official Maspero broadcast",webHint:"Internet-only station · browse the official feed",official:"Official broadcast ↗",sourceCandidate:"Candidate audio stream · listening test required"},
-ar:{live:"◈ راديو مباشر ◈",tuner:"مؤشر التردد",radio:"الراديو",search:"البحث",favorites:"المفضلة",settings:"الإعدادات",language:"اللغة",appearance:"المظهر",tuned:"المحطة المختارة",none:"لا توجد محطة على هذا التردد",am:"لا توجد محطات AM مؤكدة بعد",hint:"اسحب المؤشر أو استخدم البحث",candidate:"مصدر تجريبي · يلزم اختبار الصوت على iPhone",ready:"جاهز · اضغط تشغيل",connecting:"جار الاتصال",playing:"يعمل",paused:"متوقف مؤقتًا",buffering:"جار التخزين",reconnecting:"إعادة الاتصال",unavailable:"غير متاح · جرب محطة أخرى",empty:"لا توجد نتائج",noFavorites:"لم تحفظ محطات في المفضلة",noAudio:"لا يوجد بث صوتي مباشر مؤكد داخل التطبيق · افتح بث ماسبيرو الرسمي",webHint:"محطة عبر الإنترنت · افتح البث الرسمي",official:"البث الرسمي ↗",sourceCandidate:"رابط صوت تجريبي · يلزم اختباره"}
+en:{live:"◈ LIVE RADIO ◈",tuner:"FREQUENCY TUNER",radio:"Radio",search:"Search",favorites:"Favorites",settings:"Settings",language:"Language",appearance:"Appearance",tuned:"TUNED STATION",none:"No station at this frequency",am:"No verified AM streams yet",hint:"Drag to tune · use arrows to scan",candidate:"Candidate stream · iPhone audio test required",ready:"Ready · press Play",connecting:"Connecting",playing:"Playing",paused:"Paused",buffering:"Buffering",reconnecting:"Reconnecting",unavailable:"Unavailable · try another station",empty:"No stations found",noFavorites:"No favorites yet. Tap ☆ on a station.",noAudio:"No verified in-app audio stream · use the official Maspero broadcast",webHint:"Internet-only station · browse the official feed",official:"Official broadcast ↗",sourceCandidate:"Candidate audio stream · listening test required",dmCandidate:"Official Dailymotion live player · experimental",dmReady:"Open the Dailymotion player to start listening",dmPlaying:"Dailymotion player opened · tap Play inside player",dmTitle:"Dailymotion broadcast test",dmHelp:"Tap Play inside Dailymotion. Background audio is not verified. If embedding fails, open the original broadcast.",dmExternal:"Open on Dailymotion ↗",dmStandard:"Standard embed",dmNew:"Alternate player",dmClose:"Close player"},
+ar:{live:"◈ راديو مباشر ◈",tuner:"مؤشر التردد",radio:"الراديو",search:"البحث",favorites:"المفضلة",settings:"الإعدادات",language:"اللغة",appearance:"المظهر",tuned:"المحطة المختارة",none:"لا توجد محطة على هذا التردد",am:"لا توجد محطات AM مؤكدة بعد",hint:"اسحب المؤشر أو استخدم البحث",candidate:"مصدر تجريبي · يلزم اختبار الصوت على iPhone",ready:"جاهز · اضغط تشغيل",connecting:"جار الاتصال",playing:"يعمل",paused:"متوقف مؤقتًا",buffering:"جار التخزين",reconnecting:"إعادة الاتصال",unavailable:"غير متاح · جرب محطة أخرى",empty:"لا توجد نتائج",noFavorites:"لم تحفظ محطات في المفضلة",noAudio:"لا يوجد بث صوتي مباشر مؤكد داخل التطبيق · افتح بث ماسبيرو الرسمي",webHint:"محطة عبر الإنترنت · افتح البث الرسمي",official:"البث الرسمي ↗",sourceCandidate:"رابط صوت تجريبي · يلزم اختباره",dmCandidate:"بث رسمي على ديليموشن · تجربة",dmReady:"افتح مشغل ديليموشن واستمع للبث",dmPlaying:"مشغل ديليموشن مفتوح · اضغط تشغيل داخله",dmTitle:"تجربة بث ديليموشن",dmHelp:"اضغط تشغيل داخل ديليموشن. استمرار الصوت عند قفل الشاشة لم يُختبر. لو المشغل لم يعمل افتح البث الأصلي.",dmExternal:"فتح على ديليموشن ↗",dmStandard:"المشغل العادي",dmNew:"المشغل البديل",dmClose:"إغلاق المشغل"}
 };
 const get=(k,d)=>{try{const v=localStorage.getItem("egyptian-radio:"+k);return v===null?d:JSON.parse(v)}catch{return d}};
 const put=(k,v)=>{try{localStorage.setItem("egyptian-radio:"+k,JSON.stringify(v))}catch{}};
 const state={band:"FM",freq:1006,view:"radio",language:get("language","en"),theme:get("theme","system"),favorites:get("favorites",[]),last:get("lastPlaying",null),manualStation:null};
 if(!["en","ar"].includes(state.language))state.language="en";if(!["system","dark","light"].includes(state.theme))state.theme="system";if(!Array.isArray(state.favorites))state.favorites=[];
 const previous=stations.find(s=>s.id===state.last);if(previous){if(previous.band==="WEB")state.manualStation=previous.id;else{state.band=previous.band;state.freq=previous.freq}}
-let lastFM=state.band==="FM"?state.freq:1006,lastAM=999,current=null,phase="idle",token=0,confirmed=-1,retries=0,sourceIndex=0,timer=null,listenTest=0,suppress=false;
+let lastFM=state.band==="FM"?state.freq:1006,lastAM=999,current=null,phase="idle",token=0,confirmed=-1,retries=0,sourceIndex=0,timer=null,listenTest=0,suppress=false,dmStation=null,dmMode="standard";
 const audio=$("audio"),events=[];
 function log(s){events.unshift(new Date().toISOString()+" "+s);if(events.length>80)events.pop();if(!$("modal").hidden)diagnostics()}
 function tr(k){return lang[state.language]?.[k]||lang.en[k]||k}
@@ -48,34 +49,73 @@ $("hint").textContent=web?tr("webHint"):state.band==="AM"&&!stations.some(s=>fre
 $("stationCaption").textContent=st?tr("tuned"):"";
 $("stationName").textContent=st?title(st):tr("none");
 $("desc").textContent=st?st.genre+" · "+frequencyDisplay(st):"";
-$("source").textContent=st?(st.urls?.length?tr("sourceCandidate"):tr("noAudio")):"";
+$("source").textContent=st?(st.urls?.length?tr("sourceCandidate"):st.dailymotion?tr("dmCandidate"):tr("noAudio")):"";
 $("favorite").textContent=st&&state.favorites.includes(st.id)?"★":"☆";
 $("favorite").disabled=!st;
 $("favorite").setAttribute("aria-label",st&&state.favorites.includes(st.id)?"Remove favorite":"Add favorite");
-$("play").disabled=!st||!st.urls?.length;
+$("play").disabled=!st||(!st.urls?.length&&!st.dailymotion);
+$("dmTry").hidden=!st?.dailymotion||!st?.urls?.length;
+$("dmTry").textContent=tr("dmTitle");
 const official=$("official");official.hidden=!st?.official;
 if(st?.official){official.href=st.official;official.textContent=tr("official")}
 refreshPlayback()
 }
-function refreshPlayback(){let st=tuned(),same=!!st&&st.id===current?.id,active=same&&["connecting","playing","buffering","reconnecting"].includes(phase);$("play").textContent=active?"Ⅱ":"▶";$("play").setAttribute("aria-label",active?"Pause":"Play");$("status").textContent=current?(same?tr(phase):"Listening: "+title(current)+" · "+tr(phase)):(st&&!st.urls?.length?tr("noAudio"):tr("ready"));const visible=!!current&&(state.view!=="radio"||!same);$("mini").hidden=!visible;if(visible){$("miniName").textContent=title(current);$("miniStatus").textContent=tr(phase);$("miniPlay").textContent=["playing","connecting","buffering","reconnecting"].includes(phase)?"Ⅱ":"▶"}}
+function refreshPlayback(){let st=tuned(),same=!!st&&st.id===current?.id,active=same&&["connecting","playing","buffering","reconnecting"].includes(phase);$("play").textContent=active?"Ⅱ":"▶";$("play").setAttribute("aria-label",active?"Pause":"Play");$("status").textContent=current?(same?tr(phase):"Listening: "+title(current)+" · "+tr(phase)):(st?.dailymotion?tr("dmReady"):st&&!st.urls?.length?tr("noAudio"):tr("ready"));const visible=!!current&&(state.view!=="radio"||!same);$("mini").hidden=!visible;if(visible){$("miniName").textContent=title(current);$("miniStatus").textContent=tr(phase);$("miniPlay").textContent=["playing","connecting","buffering","reconnecting"].includes(phase)?"Ⅱ":"▶"}}
 function cleanQuery(t){return String(t||"").normalize("NFKC").toLowerCase().replace(/[٠-٩]/g,x=>String("٠١٢٣٤٥٦٧٨٩".indexOf(x))).replace(/٫/g,".").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/[\u064b-\u065f\u0670ـ]/g,"").replace(/[^a-z0-9\u0621-\u064a.]/g,"")}
 function renderList(section){let host=$(section==="search"?"searchResults":"favoriteResults"),query=section==="search"?cleanQuery($("query").value):"";host.replaceChildren();let list=stations.filter(s=>(section!=="favorites"||state.favorites.includes(s.id))&&(!query||[s.name,s.ar,s.alias,frequencyDisplay(s)].some(v=>cleanQuery(v).includes(query))));if(!list.length){let p=document.createElement("p");p.className="empty";p.textContent=section==="favorites"?tr("noFavorites"):tr("empty");host.append(p);return}
 for(const st of list){let row=document.createElement("button"),left=document.createElement("span"),strong=document.createElement("strong"),sub=document.createElement("small"),freq=document.createElement("i");row.className="entry";strong.textContent=title(st);sub.textContent=st.genre+(st.urls?.length?"":" · Official page only");left.append(strong,sub);freq.textContent=frequencyDisplay(st);row.append(left,freq);row.addEventListener("click",()=>{state.manualStation=st.band==="WEB"?st.id:null;if(st.band!=="WEB"){state.band=st.band;state.freq=st.freq;if(st.band==="FM")lastFM=st.freq;else lastAM=st.freq}show("radio")});host.append(row)}}
 function show(which){state.view=which;["radio","search","favorites"].forEach(id=>$(id).hidden=id!==which);document.querySelectorAll("[data-view]").forEach(el=>el.classList.toggle("selected",el.dataset.view===which));if(which==="radio")renderRadio();else renderList(which);refreshPlayback()}
 function favorite(){let st=tuned();if(!st)return;state.favorites=state.favorites.includes(st.id)?state.favorites.filter(id=>id!==st.id):[...state.favorites,st.id];put("favorites",state.favorites);renderRadio()}
-function locale(){document.documentElement.lang=state.language;document.documentElement.dir=state.language==="ar"?"rtl":"ltr";document.documentElement.dataset.theme=state.theme==="system"?"":state.theme;document.querySelectorAll("[data-t]").forEach(el=>el.textContent=tr(el.dataset.t));$("language").value=state.language;$("theme").value=state.theme;renderRadio();if(state.view!=="radio")renderList(state.view)}
+function locale(){if(dmStation)renderDailymotionFrame();document.documentElement.lang=state.language;document.documentElement.dir=state.language==="ar"?"rtl":"ltr";document.documentElement.dataset.theme=state.theme==="system"?"":state.theme;document.querySelectorAll("[data-t]").forEach(el=>el.textContent=tr(el.dataset.t));$("language").value=state.language;$("theme").value=state.theme;renderRadio();if(state.view!=="radio")renderList(state.view)}
 function syncMedia(){if(!("mediaSession" in navigator))return;try{if(current)navigator.mediaSession.metadata=new MediaMetadata({title:title(current),artist:"Egyptian Radio",album:current.band+" "+fLabel(current.band,current.freq)});navigator.mediaSession.playbackState=phase==="playing"?"playing":phase==="paused"?"paused":"none"}catch(e){log("Media Session "+e.message)}}
-function stop(){token++;resetTimer();suppress=true;audio.pause();audio.removeAttribute("src");audio.load();suppress=false;current=null;phase="idle";refreshPlayback();syncMedia()}
+function renderDailymotionFrame(){
+ if(!dmStation)return;
+ const id=dmStation.dailymotion;
+ $("dmFrame").src=dailymotionEmbedURL(id,dmMode);
+ $("dmOriginal").href=dailymotionVideoURL(id);
+ $("dmName").textContent=title(dmStation);
+ $("dmHelp").textContent=tr("dmHelp");
+ $("dmTitle").textContent=tr("dmTitle");
+ $("dmOriginal").textContent=tr("dmExternal");
+ $("dmClose").textContent=tr("dmClose");
+ $("dmStandard").textContent=tr("dmStandard");
+ $("dmNew").textContent=tr("dmNew");
+ $("dmStandard").setAttribute("aria-pressed",String(dmMode==="standard"));
+ $("dmNew").setAttribute("aria-pressed",String(dmMode==="new"));
+}
+function closeDailymotion(){
+ if(!dmStation)return;
+ dmStation=null;
+ $("dmOverlay").hidden=true;
+ $("dmFrame").src="about:blank";
+ log("Dailymotion iframe destroyed (stop)");
+ refreshPlayback();
+}
+function openDailymotion(st){
+ if(!st?.dailymotion)return;
+ stop(); // Ensures direct HTML5 radio cannot overlap with embedded Dailymotion audio.
+ dmStation=st;
+ dmMode="standard";
+ $("dmOverlay").hidden=false;
+ renderDailymotionFrame();
+ log("Dailymotion iframe opened "+st.dailymotion+"; sound and background unverified");
+}
+function stop(){closeDailymotion();token++;resetTimer();suppress=true;audio.pause();audio.removeAttribute("src");audio.load();suppress=false;current=null;phase="idle";refreshPlayback();syncMedia()}
 async function playStation(st){if(!st||!st.urls?.length)return;stop();current=st;sourceIndex=0;retries=0;await connect()}
 async function connect(){if(!current)return;let id=++token;resetTimer();suppress=true;audio.pause();audio.removeAttribute("src");audio.load();suppress=false;const url=current.urls[sourceIndex];if(!url){setPhase("unavailable");return}audio.src=url;audio.preload="none";setPhase("connecting");log("source "+url);timer=setTimeout(()=>{if(id===token&&phase!=="playing")fail("connection timeout")},18000);try{await audio.play()}catch(e){if(id!==token)return;if(e?.name==="NotAllowedError"){resetTimer();setPhase("paused");log("user gesture needed")}else fail("play rejected "+e?.message)}}
 function fail(message){if(!current||suppress)return;log("error "+message);resetTimer();if(sourceIndex+1<current.urls.length){sourceIndex++;void connect();return}const delays=[1000,3000,8000,20000];if(retries<delays.length&&navigator.onLine!==false){let delay=delays[retries++],id=token;setPhase("reconnecting");timer=setTimeout(()=>{if(id===token&&current){sourceIndex=0;void connect()}},delay)}else setPhase("unavailable")}
 function pause(){if(!current)return;token++;resetTimer();audio.pause();setPhase("paused")}
 async function resume(){if(!current)return;if(phase==="unavailable"){retries=0;return connect()}setPhase("connecting");try{await audio.play()}catch(e){setPhase("paused");log("resume rejected "+e?.message)}}
-function toggle(){let st=tuned();if(!st||!st.urls?.length)return;if(current?.id!==st.id){void playStation(st);return}if(["playing","buffering","connecting","reconnecting"].includes(phase))pause();else void resume()}
+function toggle(){let st=tuned();if(!st)return;if(!st.urls?.length&&st.dailymotion){openDailymotion(st);return;}if(!st.urls?.length)return;if(current?.id!==st.id){void playStation(st);return}if(["playing","buffering","connecting","reconnecting"].includes(phase))pause();else void resume()}
 audio.addEventListener("playing",()=>{if(!current||suppress)return;setPhase("playing");resetTimer();let id=token,start=audio.currentTime;setTimeout(()=>{if(id===token&&current&&phase==="playing"&&(audio.currentTime>start||audio.readyState>=3)&&confirmed!==id){confirmed=id;state.last=current.id;put("lastPlaying",state.last);log("2s media progress (audible sound unverified)")}},2000)});
 audio.addEventListener("waiting",()=>{if(current&&!audio.paused&&phase==="playing")setPhase("buffering")});audio.addEventListener("pause",()=>{if(current&&!suppress&&phase==="playing")setPhase("paused")});audio.addEventListener("error",()=>{if(current&&!suppress&&phase!=="paused"&&phase!=="idle")fail("media error")});audio.addEventListener("ended",()=>{if(current&&!suppress)fail("end of live stream")});
 try{navigator.mediaSession?.setActionHandler("play",()=>{void resume()});navigator.mediaSession?.setActionHandler("pause",pause)}catch(e){log("Media actions unsupported")}
 function diagnostics(){$("log").textContent=["Mode: "+(matchMedia("(display-mode: standalone)").matches?"Installed PWA":"Browser"),"Playback: "+phase,"Station: "+(current?.name||"none"),"readyState: "+audio.readyState,"Last progress: "+(state.last||"none"),"Network: "+navigator.onLine,"Device: "+navigator.userAgent,...events.slice(0,12)].join("\n")}
+$("dmClose").addEventListener("click",closeDailymotion);
+$("dmOverlay").addEventListener("click",event=>{if(event.target===$("dmOverlay"))closeDailymotion()});
+$("dmTry").addEventListener("click",()=>openDailymotion(tuned()));
+$("dmStandard").addEventListener("click",()=>{if(dmMode!=="standard"){dmMode="standard";renderDailymotionFrame()}});
+$("dmNew").addEventListener("click",()=>{if(dmMode!=="new"){dmMode="new";renderDailymotionFrame()}});
 $("prev").addEventListener("click",()=>scan(-1));$("next").addEventListener("click",()=>scan(1));$("play").addEventListener("click",toggle);$("favorite").addEventListener("click",favorite);
 document.querySelectorAll("[data-band]").forEach(b=>b.addEventListener("click",()=>changeBand(b.dataset.band)));document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.view)));$("query").addEventListener("input",()=>renderList("search"));
 $("settings").addEventListener("click",()=>{$("modal").hidden=false;diagnostics()});$("done").addEventListener("click",()=>{$("modal").hidden=true});$("modal").addEventListener("click",e=>{if(e.target===$("modal"))$("modal").hidden=true});
