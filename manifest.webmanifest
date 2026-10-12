@@ -1,0 +1,18 @@
+{
+  "id": "./",
+  "name": "Egyptian Radio",
+  "short_name": "Egyptian Radio",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#f6f3ed",
+  "background_color": "#f6f3ed",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
