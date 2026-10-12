@@ -1,4 +1,4 @@
-# Egyptian Radio — iPhone-first PWA (Maspero Catalogue v0.2)
+# Egyptian Radio — iPhone-first PWA (Maspero Catalogue v0.3)
 
 **Live app:** https://sydgouda2022.github.io/egyptian-radio-pwa/
 
@@ -6,7 +6,7 @@ Standalone, installable iPhone-first radio prototype; the PWA source is separate
 
 ## Stations
 - Three independent direct-stream candidates: Radio 9090 (90.9 FM), Nogoum FM (100.6 FM), Nile FM (104.2 FM).
-- **Maspero/ERTU catalogue: 14 stations**: Holy Quran, Radio Masr, Voice of the Arabs, General Programme, Youth & Sports, Cultural Programme, Songs, Greater Cairo, Middle East, European Programme, External Services 1/2, Educational Radio and Music Programme.
+- **Maspero/ERTU catalogue: 15 stations**: Holy Quran, Radio Masr, Voice of the Arabs, General Programme, Youth & Sports, Cultural Programme, Songs, Greater Cairo, Middle East, European Programme, External Services 1/2/8, Educational Radio and Music Programme.
 - FM tuner uses published **Cairo-area** frequencies; General Programme (AM 819) and Voice of the Arabs (AM 621) are also discoverable on the AM tuning dial. Frequencies are not a promise of local reception everywhere.
 - Some channels have no confirmed cross-browser direct stream. For these, the app provides a clearly identified **Official broadcast** link to Maspero; **in-app Play is disabled**, not falsely marked as working.
 - The Holy Quran Radio third-party MP3 URL is **only a candidate**; verify identity/content and sound on a real device before declaring it reliable. No Dailymotion HLS scraping or Cloudflare rebroadcasting is required.
