@@ -1,1 +1,13 @@
-const NAME="egypt-radio-pwa-shell-v1";const PATHS=["./","./index.html","./app.js","./manifest.webmanifest","./icon.svg"];self.addEventListener("install",e=>e.waitUntil(caches.open(NAME).then(c=>c.addAll(PATHS)).then(()=>self.skipWaiting())));self.addEventListener("activate",e=>e.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(xs=>Promise.all(xs.filter(x=>x!==NAME).map(x=>caches.delete(x))))])));self.addEventListener("fetch",e=>{const u=new URL(e.request.url);if(e.request.method!=="GET"||u.origin!==self.location.origin||e.request.destination==="audio"||e.request.destination==="video")return;e.respondWith(caches.match(e.request).then(hit=>hit||fetch(e.request).then(r=>{if(r.ok)caches.open(NAME).then(c=>c.put(e.request,r.clone()));return r})))});
+// Cache only the application shell. Never cache live audio or external broadcasters.
+const NAME="egypt-radio-pwa-shell-v2-maspero";
+const PATHS=["./","./index.html","./app.js","./maspero.js","./manifest.webmanifest","./icon.svg"];
+self.addEventListener("install",event=>event.waitUntil(caches.open(NAME).then(cache=>cache.addAll(PATHS)).then(()=>self.skipWaiting())));
+self.addEventListener("activate",event=>event.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==NAME).map(key=>caches.delete(key))))])));
+self.addEventListener("fetch",event=>{
+ const request=event.request,url=new URL(request.url);
+ if(request.method!=="GET"||url.origin!==self.location.origin||request.destination==="audio"||request.destination==="video"||request.headers.has("range"))return;
+ event.respondWith(caches.match(request).then(cached=>cached||fetch(request).then(response=>{
+   if(response.ok)caches.open(NAME).then(cache=>cache.put(request,response.clone()));
+   return response;
+ })));
+});
