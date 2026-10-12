@@ -1,4 +1,4 @@
-# Egyptian Radio — iPhone-first PWA (Maspero Catalogue v0.3)
+# Egyptian Radio — iPhone-first PWA (Maspero Dailymotion Experiment v0.4)
 
 **Live app:** https://sydgouda2022.github.io/egyptian-radio-pwa/
 
@@ -32,6 +32,30 @@ Standalone, installable iPhone-first radio prototype; the PWA source is separate
 Static GitHub Pages from `main`, served over HTTPS. There is no build step.
 Locally serve with `python -m http.server 4173` from the project root.
 Upon PWA update, reload once and reopen from the Home Screen so the newest service worker controls the app.
+
+
+## Experimental in-app Dailymotion Maspero broadcasts (v0.4)
+
+The Maspero catalogue now includes *official* Dailymotion live video IDs (not scraped HLS):
+
+| Station | Dailymotion live ID |
+| --- | --- |
+| General Programme | `x8n6dt3` |
+| Cultural Programme / Drama FM | `x8n6eci` |
+| Youth & Sports | `x8n6dzo` |
+| Middle East | `x8n6drt` |
+| Radio Masr | `x8n6dpk` |
+| Holy Quran | `x84wyku` |
+| Voice of the Arabs | `x8n6dqq` |
+| Songs | `x8n6dyz` |
+| Greater Cairo | `x8n6ebs` |
+| European Programme | `x8n6e6w` |
+
+Selecting one of these stations and pressing **Play** opens the official Dailymotion video embed in a dedicated testing sheet. The user must tap Play within the video; this is deliberate because iOS often blocks automatic audio playback. There are two integration options: **Standard embed**, the Dailymotion historical embed (redirected by Dailymotion to its default player), and **Alternate player**, the new `geo.dailymotion.com/player/x8lr5.html?video=...` documented endpoint (using Dailymotion's example Player ID; suitability on the broadcaster's content is not guaranteed). If neither embed works, tap **Open on Dailymotion** to compare with the original source.
+
+The PWA NEVER claims Playing merely because an iframe loads. The embedded player is third-party, cannot be accurately observed by our HTML5 audio diagnostics, and is **not expected to offer the same lock-screen reliability as direct MP3 radio**. Closing the testing sheet destroys the iframe to stop its sound. Switching from browser-audio to Dailymotion explicitly stops the old audio first. The Quran direct-audio source remains the primary playback path, with Dailymotion as an optional test.
+
+**Required iPhone field test:** Install/update the PWA, select General Programme on FM 107.4, press Play, tap Play *inside Dailymotion*, confirm audible programme, then lock the iPhone. Repeat for Cultural FM 91.5 and Radio Masr FM 88.7. Record whether audio continues, whether the new/standard embed works, and whether it resumes after unlocking. Do not assume ten-minute acceptance has passed.
 
 ## Testing priorities
 1. Ensure existing Nogoum FM audio still works after updating the PWA.
