@@ -1,6 +1,6 @@
 // Cache only the application shell. Never cache live audio or external broadcasters.
-const NAME="egypt-radio-pwa-shell-v3-maspero";
-const PATHS=["./","./index.html","./app.js","./maspero.js","./manifest.webmanifest","./icon.svg"];
+const NAME="egypt-radio-pwa-shell-v4-dailymotion";
+const PATHS=["./","./index.html","./app.js","./maspero.js","./dailymotion.js","./manifest.webmanifest","./icon.svg"];
 self.addEventListener("install",event=>event.waitUntil(caches.open(NAME).then(cache=>cache.addAll(PATHS)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",event=>event.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==NAME).map(key=>caches.delete(key))))])));
 self.addEventListener("fetch",event=>{
